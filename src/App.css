@@ -3,12 +3,12 @@
   justify-content: center;
 }
 
-.box {
+.Box-box {
   border: 1px solid black;
   width: 400px;
 }
 
-.img-size {
+.Box-img-size {
   width: 400px;
   height: 400px;
 }

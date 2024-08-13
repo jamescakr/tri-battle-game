@@ -27,15 +27,56 @@ const choice = {
 function App() {
   const [userPick, setUserPick] = useState(null);
   const [computerPick, setComputerPick] = useState(null);
+  const [userResult, setUserResult] = useState(""); //결과값을 user 랑 computer랑 따로 보여주게끔 useState를 설정
+  const [computerResult, setComputerResult] = useState("");
+
+  const randomChoice = () => {
+    let itemArray = Object.keys(choice);
+    console.log("item array", itemArray);
+    let randomItem = Math.floor(Math.random() * itemArray.length);
+    console.log(randomItem);
+    let final = itemArray[randomItem];
+    console.log("fff", final);
+    return choice[final];
+  };
 
   const play = (userChoice) => {
     setUserPick(choice[userChoice]);
+    let computerChoice = randomChoice();
+    setComputerPick(computerChoice);
+    let result = judge(choice[userChoice], computerChoice); //judge의 결과값을 result에 저장 후
+
+    //
+    setUserResult(
+      //저장한 result값을 이용하여 삼항연산식 이용 (삼항연산식 안의 삼항연산식 - 복잡해보이지만 이해하면 쉬움)
+      result === "win" ? "win" : result === "lose" ? "lose" : "tie"
+    );
+    setComputerResult(
+      result === "win" ? "lose" : result === "lose" ? "win" : "tie"
+    );
   };
+
+  const judge = (user, computer) => {
+    console.log("user", user, "computer", computer);
+    //가위바위보 로직
+    //1. 가위>>보>>바위>>가위
+    //2. 유저: 가위 일때, 컴: 보 면 >> 유저 승 ++ 컴: 바위 면 >> 컴 승
+    //3. 유저: 바위 일때, 컴: 가위 면 >> 유저 승 ++ 컴: 보 면 >> 컴 승
+    //4. 유저: 보 일때, 컴 : 바위 면 >> 유저 승 ++ 컴: 가위 면 >> 컴 승
+    if (user.name === computer.name) return "tie";
+    else if (user.name === "Scissors")
+      return computer.name === "Paper" ? "win" : "lose";
+    else if (user.name === "Rock")
+      return computer.name === "Paper" ? "win" : "lose";
+    else if (user.name === "Paper")
+      return computer.name === "Rock" ? "win" : "lose";
+  };
+
   return (
     <div>
       <div className="flex-box">
-        <Box title="you" item={userPick} />
-        {/* <Box title="computer" /> */}
+        <Box title="you" item={userPick} result={userResult} />
+        <Box title="computer" item={computerPick} result={computerResult} />
       </div>
       <div className="custom-button">
         <button onClick={() => play("scissors")}>가위</button>
