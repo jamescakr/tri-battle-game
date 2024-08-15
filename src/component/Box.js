@@ -1,15 +1,23 @@
-import React from "react";
+import React, { Component } from "react";
 
-const Box = (props) => {
-  return (
-    <div className={`Box-box ${props.item ? "fade-in-up" : ""}`}>
-      <h1> {props.title} </h1>
-      <img src={props.item ? props.item.img : null} className="Box-img-size" />
-      <h2 style={{ visibility: props.showResult ? "visible" : "hidden" }}>
-        {props.result}
-      </h2>
-    </div>
-  );
-};
+class Box extends Component {
+  render() {
+    const { title, item, result, showResult } = this.props;
+
+    const resultStyle = {
+      visibility: showResult ? "visible" : "hidden",
+      color: result === "win" ? "blue" : result === "lose" ? "red" : "black",
+      fontSize: "48px",
+    };
+
+    return (
+      <div className={`Box-box ${item ? "fade-in-up" : ""}`}>
+        <h1> {title} </h1>
+        <img src={item ? item.img : null} className="Box-img-size" />
+        <h2 style={resultStyle}>{result}</h2> {/* 스타일 적용 */}
+      </div>
+    );
+  }
+}
 
 export default Box;

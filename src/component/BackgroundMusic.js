@@ -1,19 +1,24 @@
-import { useRef } from "react";
+import React, { Component } from "react";
 
-const BackgroundMusic = ({ onPlay }) => {
-  const audioRef = useRef(null);
+class BackgroundMusic extends Component {
+  constructor(props) {
+    super(props);
+    this.audioRef = React.createRef();
+  }
 
-  const handlePlay = () => {
-    audioRef.current.play();
-    onPlay();
+  handlePlay = () => {
+    this.audioRef.current.play();
+    this.props.onPlay();
   };
 
-  return (
-    <div className="start-button">
-      <audio ref={audioRef} src="/sounds/bgm.mp3" loop />;
-      <button onClick={handlePlay}>Game Start</button>
-    </div>
-  );
-};
+  render() {
+    return (
+      <div className="start-button">
+        <audio ref={this.audioRef} src="/sounds/bgm.mp3" loop />;
+        <button onClick={this.handlePlay}>Game Start</button>
+      </div>
+    );
+  }
+}
 
 export default BackgroundMusic;
