@@ -14,7 +14,7 @@ class Box extends Component {
       <div className={`Box-box ${item ? "fade-in-up" : ""}`}>
         <h1> {title} </h1>
         <img src={item ? item.img : null} className="Box-img-size" />
-        <h2 style={resultStyle}>{result}</h2> {/* 스타일 적용 */}
+        <h2 style={resultStyle}>{result}</h2>
       </div>
     );
   }
